@@ -8,9 +8,12 @@ class MinimaxPlayer:
     wins = 0
     losses = 0
 
-    def __init__(self, board_width=3, board_height=3):
+    def __init__(self, board_width=3, board_height=3, board=None):
         self._scores = [None for i in range(3 ** (board_width * board_height + 1))]
-        self._board = [[0 for x in range(board_width)] for y in range(board_height)]
+        if board is None:
+            self._board = [[0 for x in range(board_width)] for y in range(board_height)]
+        else:
+            self._board = board
 
     def get_move(self):
         best_move = None
@@ -28,7 +31,7 @@ class MinimaxPlayer:
     def opponent_move(self, x, y):
         self._board[y][x] = 2
 
-    def get_score(self, board, player_moving=True):
+    def get_score(self, board, player_moving=True, depth=0):
         hash = hash_board(board, player_moving)
 
         if self._scores[hash] is not None:
@@ -37,12 +40,12 @@ class MinimaxPlayer:
         res = result(board)
         if res == 1:
             self.wins += 1
-            self._scores[hash] = 10
-            return 10
+            self._scores[hash] = 100 - depth
+            return 100 - depth
         if res == 2:
             self.losses += 1
-            self._scores[hash] = -10
-            return -10
+            self._scores[hash] = depth - 100
+            return depth - 100
         if res == 0:
             self.draws += 1
             self._scores[hash] = 0
@@ -52,7 +55,7 @@ class MinimaxPlayer:
 
         best_score = None
         for move in possible_moves:
-            score = self.get_score(move[0], not player_moving)
+            score = self.get_score(move[0], not player_moving, depth + 1)
             if best_score is None \
                     or ((player_moving and score > best_score)
                         or (not player_moving and score < best_score)):
@@ -70,4 +73,3 @@ class MinimaxPlayer:
                     board_copy[y][x] = 1 if player_moving else 2
                     moves.append((board_copy, (x, y)))
         return moves
-    
