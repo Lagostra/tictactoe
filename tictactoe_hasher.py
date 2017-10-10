@@ -1,4 +1,4 @@
-def hash(board):
+def hash_board(board):
     '''
     Calculates a perfect hash value for a tic-tac-toe board
     :param board: Rectangular 2D array representing the tic-tac-toe board, with cell state represented by 0, 1 or 2
