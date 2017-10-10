@@ -22,7 +22,6 @@ class MinimaxPlayer:
                 best_score = score
                 best_move = move[1]
 
-        print(best_move, best_score)
         self._board[best_move[1]][best_move[0]] = 1
         return best_move
 
@@ -38,12 +37,12 @@ class MinimaxPlayer:
         res = result(board)
         if res == 1:
             self.wins += 1
-            self._scores[hash] = 1
-            return 1
+            self._scores[hash] = 10
+            return 10
         if res == 2:
             self.losses += 1
-            self._scores[hash] = -1
-            return -1
+            self._scores[hash] = -10
+            return -10
         if res == 0:
             self.draws += 1
             self._scores[hash] = 0
