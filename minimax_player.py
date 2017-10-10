@@ -17,7 +17,7 @@ class MinimaxPlayer:
         best_score = None
 
         for move in self.get_possible_moves(self._board):
-            score = self.get_score(move[0])
+            score = self.get_score(move[0], False)
             if best_score is None or score > best_score:
                 best_score = score
                 best_move = move[1]
@@ -54,8 +54,8 @@ class MinimaxPlayer:
         for move in possible_moves:
             score = self.get_score(move[0], not player_moving)
             if best_score is None \
-                    or ((player_moving and score < best_score)
-                        or (not player_moving and score > best_score)):
+                    or ((player_moving and score > best_score)
+                        or (not player_moving and score < best_score)):
                 best_score = score
 
         self._scores[hash] = best_score
@@ -70,13 +70,4 @@ class MinimaxPlayer:
                     board_copy[y][x] = 1 if player_moving else 2
                     moves.append((board_copy, (x, y)))
         return moves
-
-if __name__ == '__main__':
-    board = [
-        [2, 1, 2],
-        [2, 1, 2],
-        [1, 0, 1]
-    ]
-
-    print(hash_board(board, True))
-    print(hash_board(board, False))
+    
