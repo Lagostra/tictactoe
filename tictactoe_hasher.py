@@ -1,15 +1,17 @@
-def hash_board(board):
+def hash_board(board, player_moving):
     '''
     Calculates a perfect hash value for a tic-tac-toe board
     :param board: Rectangular 2D array representing the tic-tac-toe board, with cell state represented by 0, 1 or 2
+    :param player_moving: Is the player moving next? (False if opponent is moving next)
     :return: Hash value of the board
     '''
     sum = 0
 
-    for y in len(board):
-        for x in len(board[0]):
+    for y in range(len(board)):
+        for x in range(len(board[0])):
             sum += board[y][x] * 3**(len(board[0]) * y + x)
 
+    sum += player_moving * 3**(len(board) * len(board[0]))
     return sum
 
 def convert(board, symbol1, symbol2, symbol3):
