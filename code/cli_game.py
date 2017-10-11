@@ -1,5 +1,4 @@
 from minimax_player import MinimaxPlayer
-from maximize_sum_player import MaximizeSumPlayer
 from functions import print_board
 from functions import result
 import time
