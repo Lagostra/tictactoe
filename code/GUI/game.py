@@ -1,10 +1,12 @@
 import pygame
+import time
 from minimax_player import MinimaxPlayer
 from functions import result
 
 class Game(pygame.Surface):
 
     player_moving = 0
+    wait = None
 
     def __init__(self, x, y, width, height):
         super().__init__((width, height))
@@ -24,7 +26,7 @@ class Game(pygame.Surface):
 
         self.start_new_game()
 
-    def start_new_game(self, player1='human', player2=MinimaxPlayer()):
+    def start_new_game(self, player1=MinimaxPlayer(), player2='human'):
         for row in self.board:
             for cell in row:
                 cell = 0
@@ -36,6 +38,9 @@ class Game(pygame.Surface):
 
     def update(self, events):
         if result(self.board) != -1:
+            return
+
+        if self.wait and time.time() < self.wait:
             return
 
         move = (-1, -1)
@@ -52,6 +57,9 @@ class Game(pygame.Surface):
                                     and mx > x * cs and mx < (x + 1) * cs:
                                     move = (x, y)
         else:
+            if self.wait is None:
+                self.wait = time.time() + 0.5
+                return
             move = self.players[self.player_moving].get_move()
 
         if self.valid_move(move):
@@ -60,6 +68,8 @@ class Game(pygame.Surface):
             if self.players[next_player] != 'human':
                 self.players[next_player].opponent_move(move[0], move[1])
             self.player_moving = next_player
+
+        self.wait = None
 
     def render(self):
         self.fill((255, 255, 255))
