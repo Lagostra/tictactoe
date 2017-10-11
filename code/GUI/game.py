@@ -7,6 +7,8 @@ class Game(pygame.Surface):
 
     player_moving = 0
     wait = None
+    started = False
+    players = ()
 
     def __init__(self, x, y, width, height):
         super().__init__((width, height))
@@ -24,12 +26,11 @@ class Game(pygame.Surface):
 
         self.cell_size = min(self.width / len(self.board[0]), self.height / len(self.board))
 
-        self.start_new_game()
-
-    def start_new_game(self, player1=MinimaxPlayer(), player2='human'):
-        for row in self.board:
-            for cell in row:
-                cell = 0
+    def start_new_game(self, player1, player2):
+        self.started = True
+        for y in range(len(self.board)):
+            for x in range(len(self.board[0])):
+                self.board[y][x] = 0
 
         self.players = (
             player1,
@@ -37,7 +38,7 @@ class Game(pygame.Surface):
         )
 
     def update(self, events):
-        if result(self.board) != -1:
+        if not self.started or result(self.board) != -1:
             return
 
         if self.wait and time.time() < self.wait:
@@ -97,7 +98,7 @@ class Game(pygame.Surface):
                         pygame.draw.ellipse(self, (0, 0, 0), pygame.Rect(x0, y0, x1 - x0, y1 - y0), line_width)
 
         res = result(self.board)
-        if res != -1:
+        if res != -1 or not self.started:
             s = pygame.Surface((self.width, self.height))
             s.set_alpha(128)
             s.fill((0, 0, 0))
