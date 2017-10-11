@@ -1,7 +1,7 @@
 import pygame
 from GUI.game import Game
 
-class Main:
+class Screen:
 
     def __init__(self):
         pygame.init()
@@ -37,5 +37,5 @@ class Main:
             pygame.display.flip()
 
 if __name__ == '__main__':
-    main = Main()
-    main.start()
+    screen = Screen()
+    screen.start()
