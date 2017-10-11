@@ -4,10 +4,6 @@ from functions import print_board
 
 class MinimaxPlayer:
 
-    draws = 0
-    wins = 0
-    losses = 0
-
     def __init__(self, board_width=3, board_height=3, board=None):
         self._scores = [None for i in range(3 ** (board_width * board_height + 1))]
         if board is None:
@@ -39,15 +35,12 @@ class MinimaxPlayer:
 
         res = result(board)
         if res == 1:
-            self.wins += 1
             self._scores[hash] = 100 - depth
             return 100 - depth
         if res == 2:
-            self.losses += 1
             self._scores[hash] = depth - 100
             return depth - 100
         if res == 0:
-            self.draws += 1
             self._scores[hash] = 0
             return 0
 
