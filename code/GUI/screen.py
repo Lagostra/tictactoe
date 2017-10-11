@@ -1,8 +1,10 @@
 import pygame
+
+from GUI.button import Button
 from GUI.game import Game
 from GUI.picker import Picker
-from GUI.button import Button
-from minimax_player import MinimaxPlayer
+from players.minimax_player import MinimaxPlayer
+
 
 class Screen:
 

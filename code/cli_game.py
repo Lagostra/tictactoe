@@ -1,7 +1,8 @@
-from minimax_player import MinimaxPlayer
+import time
+
 from functions import print_board
 from functions import result
-import time
+from players.minimax_player import MinimaxPlayer
 
 
 def valid_move(move, board):

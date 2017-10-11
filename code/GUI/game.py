@@ -1,7 +1,9 @@
-import pygame
 import time
-from minimax_player import MinimaxPlayer
+
+import pygame
+
 from functions import result
+
 
 class Game(pygame.Surface):
 
