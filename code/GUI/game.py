@@ -39,6 +39,8 @@ class Game(pygame.Surface):
             player2
         )
 
+        self.player_moving = 0
+
     def update(self, events):
         if not self.started or result(self.board) != -1:
             return
