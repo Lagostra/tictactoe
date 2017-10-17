@@ -56,7 +56,7 @@ class LearningPlayer:
                 self.scores[hash_board(b[0], b[1])] -= 1
 
         if self._save_each_iteration:
-            self.save_data(self._scores, self.LEARNING_DATA_PATH)
+            self.save_data(self.scores, self.LEARNING_DATA_PATH)
 
     def load_data(self, path):
         if os.path.isfile(path):
