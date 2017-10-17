@@ -1,5 +1,6 @@
 import json
 import os.path
+import random
 from collections import defaultdict
 
 from functions import result
@@ -26,6 +27,7 @@ class LearningPlayer:
 
     def get_move(self):
         possible_moves = self.get_possible_moves(self._board)
+        random.shuffle(possible_moves)
         best_move = max(possible_moves, key=lambda x: self.scores[hash_board(x[0], False)])
 
         self._board = best_move[0]

@@ -1,3 +1,5 @@
+import random
+
 from tictactoe_hasher import hash_board
 from functions import result
 from functions import print_board
@@ -45,7 +47,7 @@ class MinimaxPlayer:
             return 0
 
         possible_moves = self.get_possible_moves(board, player_moving)
-
+        random.shuffle(possible_moves)
         best_score = None
         for move in possible_moves:
             score = self.get_score(move[0], not player_moving, depth + 1)
