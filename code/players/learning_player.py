@@ -5,25 +5,30 @@ from collections import defaultdict
 from functions import result
 from tictactoe_hasher import hash_board
 
+
 class LearningPlayer:
 
     LEARNING_DATA_PATH = 'learning_data.json'
     _boards = []
+    _board = None
 
     def __init__(self, board_width=3, board_height=3, board=None):
         self._scores = self.load_data(self.LEARNING_DATA_PATH)
+        self.reset(board_width, board_height, board)
+
+    def reset(self, board_width=3, board_height=3, board=None):
         if board is None:
             self._board = [[0 for x in range(board_width)] for y in range(board_height)]
         else:
             self._board = board
+        self._boards = []
 
     def get_move(self):
         possible_moves = self.get_possible_moves(self._board)
-
-        best_move = max(possible_moves, lambda x: self._scores[hash_board(x[0])])
+        best_move = max(possible_moves, key=lambda x: self._scores[hash_board(x[0], False)])
 
         self._board = best_move[0]
-        self._boards.append(self._board)
+        self._boards.append((self._board, False))
 
         if result(self._board) != -1:
             self.set_result()
@@ -33,7 +38,7 @@ class LearningPlayer:
 
     def opponent_move(self, x, y):
         self._board[y][x] = 2
-        self._boards.append(self._board)
+        self._boards.append((self._board, True))
 
         if result(self._board) != -1:
             self.set_result()
@@ -41,13 +46,13 @@ class LearningPlayer:
     def set_result(self):
         if result(self._board) == 2:
             for b in self._boards:
-                self._scores[hash_board(b)] -= 5
+                self._scores[hash_board(b[0], b[1])] -= 5
         elif result(self._board) == 1:
             for b in self._boards:
-                self._scores[hash_board(b)] += 5
+                self._scores[hash_board(b[0], b[1])] += 5
         elif result(self._board) == 0:
             for b in self._boards:
-                self._scores[hash_board(b)] -= 1
+                self._scores[hash_board(b[0], b[1])] -= 1
 
         self.save_data(self._scores, self.LEARNING_DATA_PATH)
 

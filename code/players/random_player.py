@@ -1,8 +1,14 @@
 import random
 
+
 class RandomPlayer:
 
+    _board = None
+
     def __init__(self, board_width=3, board_height=3, board=None):
+        self.reset(board_width, board_height, board)
+
+    def reset(self, board_width=3, board_height=3, board=None):
         if board is None:
             self._board = [[0 for x in range(board_width)] for y in range(board_height)]
         else:
