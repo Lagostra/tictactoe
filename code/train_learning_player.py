@@ -1,6 +1,7 @@
 from functions import result
 from players.learning_player import LearningPlayer
 from players.random_player import RandomPlayer
+from players.minimax_player import MinimaxPlayer
 
 def valid_move(board, move):
     if len(move) != 2:
@@ -32,7 +33,7 @@ def play_single_game(players, player_moving = 0):
             player_moving = next_player
 
 if __name__ == '__main__':
-    players = (RandomPlayer(), LearningPlayer(save_each_iteration=False))
+    players = (MinimaxPlayer(), LearningPlayer(save_each_iteration=False))
 
     for i in range(1000000):
         play_single_game(players, i % 2)

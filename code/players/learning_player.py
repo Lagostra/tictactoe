@@ -55,7 +55,7 @@ class LearningPlayer:
                 self.scores[hash_board(b[0], b[1])] += 5
         elif result(self._board) == 0:
             for b in self._boards:
-                self.scores[hash_board(b[0], b[1])] -= 1
+                self.scores[hash_board(b[0], b[1])] += 1
 
         if self._save_each_iteration:
             self.save_data(self.scores, self.LEARNING_DATA_PATH)

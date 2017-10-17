@@ -8,6 +8,9 @@ class MinimaxPlayer:
 
     def __init__(self, board_width=3, board_height=3, board=None):
         self._scores = [None for i in range(3 ** (board_width * board_height + 1))]
+        self.reset(board_width, board_height, board)
+
+    def reset(self, board_width=3, board_height=3, board=None):
         if board is None:
             self._board = [[0 for x in range(board_width)] for y in range(board_height)]
         else:
