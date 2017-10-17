@@ -32,9 +32,12 @@ def play_single_game(players, player_moving = 0):
             player_moving = next_player
 
 if __name__ == '__main__':
-    players = (RandomPlayer(), LearningPlayer())
+    players = (RandomPlayer(), LearningPlayer(save_each_iteration=False))
 
     for i in range(1000000):
         play_single_game(players, i % 2)
+        if not i % 1000:
+            print(i, 'iterations completed')
+            players[1].save_data(players[1].scores, players[1].LEARNING_DATA_PATH)
         for p in players:
             p.reset()

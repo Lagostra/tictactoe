@@ -12,8 +12,9 @@ class LearningPlayer:
     _boards = []
     _board = None
 
-    def __init__(self, board_width=3, board_height=3, board=None):
-        self._scores = self.load_data(self.LEARNING_DATA_PATH)
+    def __init__(self, board_width=3, board_height=3, board=None, save_each_iteration=True):
+        self._save_each_iteration = save_each_iteration
+        self.scores = self.load_data(self.LEARNING_DATA_PATH)
         self.reset(board_width, board_height, board)
 
     def reset(self, board_width=3, board_height=3, board=None):
@@ -25,7 +26,7 @@ class LearningPlayer:
 
     def get_move(self):
         possible_moves = self.get_possible_moves(self._board)
-        best_move = max(possible_moves, key=lambda x: self._scores[hash_board(x[0], False)])
+        best_move = max(possible_moves, key=lambda x: self.scores[hash_board(x[0], False)])
 
         self._board = best_move[0]
         self._boards.append((self._board, False))
@@ -46,15 +47,16 @@ class LearningPlayer:
     def set_result(self):
         if result(self._board) == 2:
             for b in self._boards:
-                self._scores[hash_board(b[0], b[1])] -= 5
+                self.scores[hash_board(b[0], b[1])] -= 5
         elif result(self._board) == 1:
             for b in self._boards:
-                self._scores[hash_board(b[0], b[1])] += 5
+                self.scores[hash_board(b[0], b[1])] += 5
         elif result(self._board) == 0:
             for b in self._boards:
-                self._scores[hash_board(b[0], b[1])] -= 1
+                self.scores[hash_board(b[0], b[1])] -= 1
 
-        self.save_data(self._scores, self.LEARNING_DATA_PATH)
+        if self._save_each_iteration:
+            self.save_data(self._scores, self.LEARNING_DATA_PATH)
 
     def load_data(self, path):
         if os.path.isfile(path):
