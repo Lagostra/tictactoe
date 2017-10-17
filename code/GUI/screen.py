@@ -5,6 +5,7 @@ from GUI.game import Game
 from GUI.picker import Picker
 from players.minimax_player import MinimaxPlayer
 from players.random_player import RandomPlayer
+from players.learning_player import LearningPlayer
 
 class Screen:
 
@@ -17,7 +18,8 @@ class Screen:
         player_options = [
             ('Human', 0),
             ('Minimax', 1),
-            ('Random', 2)
+            ('Learning', 2),
+            ('Random', 3),
         ]
 
         self.player1_picker = Picker(5, 5, 150, 30, player_options, 1)
@@ -70,6 +72,8 @@ class Screen:
         if picker_value == 1:
             return MinimaxPlayer()
         if picker_value == 2:
+            return LearningPlayer()
+        if picker_value == 3:
             return RandomPlayer()
 
 if __name__ == '__main__':
