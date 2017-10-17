@@ -8,7 +8,7 @@ from tictactoe_hasher import hash_board
 
 class LearningPlayer:
 
-    LEARNING_DATA_PATH = 'learning_data.json'
+    LEARNING_DATA_PATH = os.path.join(os.path.dirname(__file__), 'learning_data.json')
     _boards = []
     _board = None
 
