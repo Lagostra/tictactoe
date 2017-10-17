@@ -1,2 +1,3 @@
 # Tic-Tac-Toe
-This is an implementation of the minimax method to create an unbeatable Tic-Tac-Toe AI
+AI algorithms of various quality for the classic game Tic-Tac-Toe.
+The Minimax implementation is unbeatable, while the learning version is pretty much unusable.
